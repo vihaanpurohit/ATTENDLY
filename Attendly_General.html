@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#4f46e5">
+<title>Attendly — General Attendance Tracker</title>
+<style>
+:root{--bg:#f5f7fb;--card:#fff;--text:#182033;--muted:#667085;--line:#e4e7ec;--primary:#4f46e5;--green:#16a34a;--yellow:#d97706;--red:#dc2626;--blue:#2563eb;--shadow:0 8px 28px rgba(15,23,42,.07)}
+[data-theme=dark]{--bg:#0f172a;--card:#172033;--text:#f1f5f9;--muted:#94a3b8;--line:#2d3748;--shadow:0 8px 28px rgba(0,0,0,.22)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button,input,select,textarea{font:inherit}button{cursor:pointer}.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.topin{max-width:1150px;margin:auto;padding:12px 16px;display:flex;justify-content:space-between;align-items:center}.brand{font-size:22px;font-weight:900}.tag{font-size:12px;color:var(--muted)}nav{display:flex;gap:4px}nav button{border:0;background:transparent;color:var(--muted);padding:9px 11px;border-radius:10px}nav button.active{background:var(--primary);color:#fff}
+main{max-width:1150px;margin:auto;padding:18px 16px 90px}.page{display:none}.page.active{display:block}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:17px;box-shadow:var(--shadow)}.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:14px}.heroMain{display:flex;align-items:center;gap:18px}.ring{width:112px;height:112px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--primary) var(--p,0%),var(--line) 0);position:relative;flex:none}.ring:after{content:"";position:absolute;inset:10px;border-radius:50%;background:var(--card)}.ring b{position:relative;z-index:1;font-size:20px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.section{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:22px 0 10px}.section h2,.section h3{margin:0}.subject{cursor:pointer;transition:.15s}.subject:hover{transform:translateY(-2px)}.pct{font-size:28px;font-weight:900}.mini,.muted{color:var(--muted)}.mini{font-size:12px}.bar{height:8px;background:var(--line);border-radius:20px;overflow:hidden;margin:9px 0}.bar i{display:block;height:100%;background:var(--primary);width:var(--w)}.safe{color:var(--green)}.warn{color:var(--yellow)}.critical{color:var(--red)}.btn{border:0;background:var(--primary);color:#fff;font-weight:800;border-radius:11px;padding:10px 14px}.btn.secondary{background:var(--line);color:var(--text)}.btn.danger{background:var(--red)}.btn.sm{padding:7px 10px;font-size:13px}.actions{display:flex;gap:8px;flex-wrap:wrap}.form{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.field label{display:block;font-size:13px;font-weight:800;margin-bottom:5px}.field input,.field select,.field textarea{width:100%;padding:10px 11px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--text)}.full{grid-column:1/-1}.notice{padding:13px;border-radius:12px;background:#eef2ff;border:1px solid #c7d2fe}.dark .notice{background:#1e1b4b}.classrow{display:grid;grid-template-columns:145px 1fr auto;gap:10px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line)}.classrow:last-child{border-bottom:0}.statusBtns{display:flex;gap:4px}.statusBtns button{border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:8px;padding:6px 9px}.statusBtns button.on{background:var(--primary);border-color:var(--primary);color:#fff}.pill{display:inline-block;border-radius:999px;padding:5px 9px;background:var(--line);font-size:12px;font-weight:750}.empty{text-align:center;padding:30px;color:var(--muted)}.setup{max-width:850px;margin:15px auto}.setup h1{margin-top:0}.quick{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.quickrow{display:grid;grid-template-columns:1fr 42px 42px 42px;gap:5px;align-items:center;border-bottom:1px solid var(--line);padding:8px 0}.quickrow button{border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:9px;height:38px;font-weight:900}.quickrow input{text-align:center;width:100%;height:38px;border:1px solid var(--line);border-radius:9px;background:var(--card);color:var(--text)}.modal{display:none;position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.55);align-items:center;justify-content:center;padding:14px}.modal.show{display:flex}.modalbox{background:var(--card);color:var(--text);width:min(720px,100%);max-height:92vh;overflow:auto;border-radius:20px;padding:19px}.toast{position:fixed;bottom:75px;left:50%;transform:translate(-50%,20px);opacity:0;background:#111827;color:#fff;padding:10px 15px;border-radius:10px;z-index:80;transition:.2s}.toast.show{opacity:1;transform:translate(-50%,0)}.calendarHead{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}.cal{min-height:70px;border:1px solid var(--line);border-radius:9px;padding:6px;background:var(--card)}.cal button{border:0;background:transparent;color:var(--text);padding:0;width:100%;text-align:left}.dots{font-size:11px;line-height:1.35;margin-top:5px}.g{color:var(--green)}.r{color:var(--red)}.y{color:var(--yellow)}.b{color:var(--blue)}.bottom{display:none}
+@media(max-width:820px){nav{display:none}.hero,.grid{grid-template-columns:1fr}.quick{grid-template-columns:1fr}.form{grid-template-columns:1fr}.bottom{display:grid;position:fixed;bottom:0;left:0;right:0;z-index:30;background:var(--card);border-top:1px solid var(--line);grid-template-columns:repeat(5,1fr);padding:4px 2px env(safe-area-inset-bottom)}.bottom button{font-size:10px;padding:5px 1px}.bottom span{display:block;font-size:17px}.main{padding:12px 10px 85px}.classrow{grid-template-columns:88px 1fr}.statusBtns{grid-column:1/-1}.ring{width:98px;height:98px}}
+</style>
+</head>
+<body>
+<header class="top"><div class="topin"><div><div class="brand">Attendly</div><div class="tag">Know your attendance. Know your limits.</div></div><nav id="nav"></nav></div></header>
+<main>
+<section id="setup" class="page"></section>
+<section id="home" class="page"></section>
+<section id="attendance" class="page"></section>
+<section id="subjects" class="page"></section>
+<section id="timetable" class="page"></section>
+<section id="settings" class="page"></section>
+</main>
+<nav class="bottom" id="bottom"></nav>
+<div class="modal" id="modal"><div class="modalbox" id="modalbox"></div></div><div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+const KEY="attendly_general_v1";
+const DAYS=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+const DEFAULTS={setup:false,start:"",min:75,batch:"All",theme:"light",subjects:[],timetable:[],missed:{},holidays:[],extras:[],overrides:{}};
+let S=load();
+
+function load(){try{return Object.assign({},DEFAULTS,JSON.parse(localStorage.getItem(KEY)||"null")||{})}catch(e){return JSON.parse(JSON.stringify(DEFAULTS))}}
+function persist(){localStorage.setItem(KEY,JSON.stringify(S));render()}
+function dateObj(x){return new Date(x+"T00:00:00")}
+function iso(d){return d.toISOString().slice(0,10)}
+function today(){return iso(new Date())}
+function fmt(x){return dateObj(x).toLocaleDateString(undefined,{day:"numeric",month:"short",year:"numeric"})}
+function sub(id){return S.subjects.find(x=>x.id===id)}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2)}
+function pct(a,t){return t?Math.round(a/t*10000)/100:null}
+function canMiss(a,t,r){return t?Math.max(0,Math.floor(a/r-t+1e-12)):0}
+function needAttend(a,t,r){return t&&a/t<r?Math.max(0,Math.ceil((r*t-a)/(1-r)-1e-12)):0}
+function status(p){if(p===null)return["N/A",""];if(p<S.min)return["🔴 Critical","critical"];if(p<S.min+5)return["🟡 Warning","warn"];return["🟢 Safe","safe"]}
+function batchOK(b){return b==="All"||S.batch==="All"||b===S.batch}
+function holiday(d){return S.holidays.some(x=>x.date===d)}
+function navHTML(){return [["home","🏠","Home"],["attendance","📅","Attendance"],["subjects","📚","Subjects"],["timetable","🗓️","Timetable"],["settings","⚙️","Settings"]].map(x=>`<button data-go="${x[0]}"><span>${x[1]}</span>${x[2]}</button>`).join("")}
+function go(id){if(!S.setup)id="setup";document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));document.getElementById(id).classList.add("active");document.querySelectorAll("[data-go]").forEach(x=>x.classList.toggle("active",x.dataset.go===id));scrollTo(0,0)}
+function bindNav(){document.querySelectorAll("[data-go]").forEach(x=>x.onclick=()=>go(x.dataset.go))}
+function render(){
+ document.documentElement.dataset.theme=S.theme;
+ document.getElementById("nav").innerHTML=navHTML();document.getElementById("bottom").innerHTML=navHTML();bindNav();
+ if(!S.setup){renderSetup();go("setup");return}
+ renderHome();renderAttendance();renderSubjects();renderTimetable();renderSettings();
+ const current=document.querySelector(".page.active")?.id||"home";go(current==="setup"?"home":current)
+}
+function renderSetup(){
+ document.getElementById("setup").innerHTML=`<div class="setup card"><h1>Welcome to Attendly 👋</h1>
+ <p class="muted">A generalized offline attendance tracker. Add your own subjects and timetable, enter your semester start date, then enter only the classes you missed. Every other past scheduled class is assumed attended.</p>
+ <div class="notice"><b>Works for any college.</b> No fixed college timetable is built in. You can type your timetable, import a simple CSV, or paste timetable text.</div>
+ <h2>1. Semester</h2><div class="form"><div class="field"><label>Semester Start Date</label><input id="sStart" type="date" value="${S.start||today()}"></div><div class="field"><label>Minimum Attendance (%)</label><input id="sMin" type="number" min="0" max="100" step=".1" value="${S.min}"></div><div class="field"><label>My Batch (optional)</label><input id="sBatch" value="${S.batch==="All"?"":S.batch}" placeholder="A, B, C..."></div></div>
+ <h2>2. Add Subjects</h2><p class="muted small">Add theory and lab subjects separately if your college calculates them separately. If your college combines theory + lab, use one subject name for both timetable entries.</p>
+ <div id="setupSubs">${S.subjects.map(subjectEditRow).join("")}</div><button class="btn secondary sm" onclick="addSetupSubject()">+ Add Subject</button>
+ <h2>3. Build / Import Timetable</h2><div class="actions"><button class="btn" onclick="openTimetableImport()">Import Timetable</button><button class="btn secondary" onclick="openTimetableBuilder()">Enter Manually</button></div>
+ <div id="setupTT" class="mini" style="margin-top:10px">${S.timetable.length} timetable entries currently saved.</div>
+ <h2>4. Missed Classes</h2><p class="muted small">After subjects and timetable are ready, enter missed counts. You can edit these anytime.</p>
+ <button class="btn" onclick="finishSetup()">Calculate My Attendance →</button>
+ </div>`;
+}
+function subjectEditRow(s,i){return `<div class="card" style="margin:8px 0;padding:12px"><div class="form"><div class="field"><label>Name</label><input class="setupSubName" data-i="${i}" value="${esc(s.name)}"></div><div class="field"><label>Code</label><input class="setupSubCode" data-i="${i}" value="${esc(s.code||"")}"></div><div class="field"><label>Type</label><select class="setupSubType" data-i="${i}"><option ${s.type==="Theory"?"selected":""}>Theory</option><option ${s.type==="Lab"?"selected":""}>Lab</option><option ${s.type==="Practical"?"selected":""}>Practical</option><option ${s.type==="Other"?"selected":""}>Other</option></select></div><div><label>&nbsp;</label><button class="btn danger sm" onclick="removeSetupSubject(${i})">Delete</button></div></div></div>`}
+function addSetupSubject(){S.subjects.push({id:"s_"+uid(),name:"New Subject",code:"",type:"Theory"});saveNoRender();renderSetup()}
+function removeSetupSubject(i){if(!confirm("Delete this subject and its timetable entries?"))return;const id=S.subjects[i].id;S.subjects.splice(i,1);S.timetable=S.timetable.filter(x=>x.subjectId!==id);delete S.missed[id];saveNoRender();renderSetup()}
+function finishSetup(){
+ if(!S.subjects.length){alert("Add at least one subject.");return}
+ const start=document.getElementById("sStart").value,min=Number(document.getElementById("sMin").value),batch=document.getElementById("sBatch").value.trim()||"All";
+ if(!start||dateObj(start)>dateObj(today())){alert("Enter a valid semester start date that is not in the future.");return}
+ if(!(min>=0&&min<=100)){alert("Minimum attendance must be between 0 and 100.");return}
+ document.querySelectorAll(".setupSubName").forEach(x=>S.subjects[+x.dataset.i].name=x.value.trim());
+ document.querySelectorAll(".setupSubCode").forEach(x=>S.subjects[+x.dataset.i].code=x.value.trim());
+ document.querySelectorAll(".setupSubType").forEach(x=>S.subjects[+x.dataset.i].type=x.value);
+ if(S.subjects.some(x=>!x.name)){alert("Every subject needs a name.");return}
+ S.start=start;S.min=min;S.batch=batch;S.missed={};S.subjects.forEach(x=>S.missed[x.id]=S.missed[x.id]||0);S.setup=true;S.overrides={};persist();toast("Attendly is ready.");go("home")
+}
+function generated(){
+ const out=[];if(!S.start)return out;
+ for(let d=dateObj(S.start),end=dateObj(today());d<=end;d.setDate(d.getDate()+1)){
+  const ds=iso(d);if(holiday(ds))continue;const wd=d.getDay();
+  S.timetable.forEach((x,i)=>{if(+x.day!==wd||!batchOK(x.batch))return;out.push({id:`tt_${ds}_${x.id}`,date:ds,start:x.start,end:x.end,subjectId:x.subjectId,batch:x.batch,type:x.type,status:S.overrides[`tt_${ds}_${x.id}`]||"attended",base:"timetable"})})
+ }
+ return out
+}
+function classes(){return generated().concat(S.extras.filter(x=>x.date<=today()))}
+function stats(id){
+ const c=classes().filter(x=>x.subjectId===id),cancel=c.filter(x=>x.status==="cancelled").length,conducted=c.length-cancel,att=c.filter(x=>x.status==="attended").length,miss=c.filter(x=>x.status==="missed").length;
+ /* Quick-count mode: when no individual corrections exist, replace generated missed statuses
+    with the user's subject-level missed count. This keeps the daily workflow extremely fast. */
+ const hasManual=c.some(x=>x.base==="timetable"&&S.overrides[x.id]);
+ let a=att,m=miss;
+ if(!hasManual){
+   const quick=Math.min(Number(S.missed[id]||0),conducted);
+   a=Math.max(0,conducted-quick);
+   m=quick;
+ }
+ return{classes:c,conducted,attended:a,missed:m,cancelled:cancel,p:pct(a,conducted)}
+}
+function overall(){let a=0,t=0;S.subjects.forEach(s=>{const z=stats(s.id);a+=z.attended;t+=z.conducted});return{a,t,p:pct(a,t)}}
+function subjectCard(s){const z=stats(s.id),[lab,cl]=status(z.p),r=S.min/100;const msg=z.conducted===0?"No classes conducted yet.":z.p>=S.min?`You can miss <b>${canMiss(z.attended,z.conducted,r)}</b> more class(es).`:`Attend the next <b>${needAttend(z.attended,z.conducted,r)}</b> class(es) to reach ${S.min}%.`;return `<div class="card subject" onclick="detail('${s.id}')"><h3>${esc(s.name)}</h3><div class="mini">${esc(s.code||"")} · ${s.type}</div><div class="pct">${z.p===null?"N/A":z.p.toFixed(2)+"%"}</div><div class="mini">${z.attended} attended / ${z.conducted} conducted · ${z.missed} missed</div><div class="bar"><i style="--w:${Math.min(100,z.p||0)}%"></i></div><div class="status ${cl}">${lab}</div><div class="mini" style="margin-top:5px">${msg}</div></div>`}
+function row(x){const s=sub(x.subjectId);return `<div class="classrow"><b>${x.start}–${x.end}</b><div><b>${esc(s?.name||"Unknown")}</b><div class="mini">${x.type}${x.batch&&x.batch!=="All"?" · Batch "+esc(x.batch):""}</div></div><div class="statusBtns"><button class="${x.status==="attended"?"on":""}" onclick="event.stopPropagation();setStatus('${x.id}','attended')">✓</button><button class="${x.status==="missed"?"on":""}" onclick="event.stopPropagation();setStatus('${x.id}','missed')">✕</button><button class="${x.status==="cancelled"?"on":""}" onclick="event.stopPropagation();setStatus('${x.id}','cancelled')">—</button></div></div>`}
+function renderHome(){
+ const o=overall(),tc=classes().filter(x=>x.date===today()).sort((a,b)=>a.start.localeCompare(b.start));
+ document.getElementById("home").innerHTML=`<div class="hero"><div class="card heroMain"><div class="ring" style="--p:${o.p||0}%"><b>${o.p===null?"N/A":o.p.toFixed(2)+"%"}</b></div><div><div class="mini">Overall Attendance</div><h2>${o.p===null?"N/A":o.p.toFixed(2)+"%"}</h2><div>Minimum Required: <b>${S.min}%</b></div><div class="mini">${o.a} attended / ${o.t} conducted</div></div></div><div class="card"><h3 style="margin-top:0">Your Setup</h3><p class="muted">Semester: <b>${fmt(S.start)}</b></p><p class="muted">Batch: <b>${esc(S.batch)}</b></p><button class="btn secondary sm" onclick="editMissed()">Edit Missed Counts</button></div></div>
+ <div class="section"><div><h2>Today's Classes</h2><div class="mini">Everything starts as attended. Correct only what you actually missed/cancelled.</div></div><button class="btn sm" onclick="go('attendance')">Attendance</button></div><div class="card">${tc.length?tc.map(row).join(""):'<div class="empty">No classes today.</div>'}</div>
+ <div class="section"><h2>Subject-wise Attendance</h2></div><div class="grid">${S.subjects.map(subjectCard).join("")}</div>`;
+}
+function renderAttendance(){
+ const c=classes().sort((a,b)=>b.date.localeCompare(a.date)||a.start.localeCompare(b.start)),g={};c.forEach(x=>(g[x.date]??=[]).push(x));
+ document.getElementById("attendance").innerHTML=`<div class="section"><div><h2>Attendance</h2><div class="mini">Use the buttons for exact corrections. Quick-count mode remains available from the top.</div></div><div class="actions"><button class="btn secondary sm" onclick="editMissed()">Missed Counts</button><button class="btn sm" onclick="openExtra()">+ Extra Class</button></div></div>${Object.keys(g).length?Object.keys(g).map(d=>`<div class="card" style="margin-bottom:12px"><div class="section" style="margin-top:0"><h3>${fmt(d)}</h3>${holiday(d)?'<span class="pill">🔵 Holiday</span>':""}</div>${g[d].map(row).join("")}</div>`).join(""):'<div class="card empty">No classes generated yet.</div>'}`;
+}
+function renderSubjects(){
+ document.getElementById("subjects").innerHTML=`<div class="section"><div><h2>Subjects</h2><div class="mini">Tap a subject for detailed calculations.</div></div><button class="btn sm" onclick="editSubjects()">Edit Subjects</button></div><div class="grid">${S.subjects.map(subjectCard).join("")}</div>`;
+}
+function renderTimetable(){
+ const by={};S.timetable.forEach(x=>(by[x.day]??=[]).push(x));let h=`<div class="section"><div><h2>My Timetable</h2><div class="mini">${S.timetable.length} entries · Batch filter: ${esc(S.batch)}</div></div><div class="actions"><button class="btn sm" onclick="openTimetableBuilder()">+ Add Class</button><button class="btn secondary sm" onclick="openTimetableImport()">Import</button></div></div>`;
+ for(let d=1;d<=6;d++){const arr=(by[d]||[]).filter(x=>batchOK(x.batch)).sort((a,b)=>a.start.localeCompare(b.start));h+=`<div class="card" style="margin-bottom:11px"><h3>${DAYS[d]}</h3>${arr.length?arr.map(x=>`<div class="classrow"><b>${x.start}–${x.end}</b><div><b>${esc(sub(x.subjectId)?.name||"Deleted subject")}</b><div class="mini">${x.type}${x.batch!=="All"?" · Batch "+esc(x.batch):""}</div></div><div class="actions"><button class="btn secondary sm" onclick="editTT('${x.id}')">Edit</button><button class="btn danger sm" onclick="deleteTT('${x.id}')">Delete</button></div></div>`).join(""):'<div class="empty">No classes.</div>'}</div>`}
+ document.getElementById("timetable").innerHTML=h;
+}
+function renderSettings(){
+ document.getElementById("settings").innerHTML=`<div class="section"><h2>Settings</h2></div><div class="card"><div class="form"><div class="field"><label>Semester Start</label><input type="date" value="${S.start}" onchange="changeStart(this.value)"></div><div class="field"><label>Minimum Attendance</label><input type="number" min="0" max="100" step=".1" value="${S.min}" onchange="changeMin(this.value)"></div><div class="field"><label>My Batch</label><input value="${esc(S.batch==="All"?"":S.batch)}" placeholder="All / A / B / C" onchange="S.batch=this.value.trim()||'All';persist()"></div><div class="field"><label>Theme</label><select onchange="S.theme=this.value;persist()"><option value="light" ${S.theme==="light"?"selected":""}>Light</option><option value="dark" ${S.theme==="dark"?"selected":""}>Dark</option></select></div></div></div>
+ <div class="section"><h2>Holidays</h2><button class="btn sm" onclick="openHoliday()">+ Add Holiday</button></div><div class="card">${S.holidays.length?S.holidays.map(h=>`<div class="classrow"><b>${fmt(h.date)}</b><div>${esc(h.reason||"Holiday")}</div><button class="btn danger sm" onclick="delHoliday('${h.date}')">Delete</button></div>`).join(""):'<div class="empty">No holidays.</div>'}</div>
+ <div class="section"><h2>Backup</h2></div><div class="card"><div class="actions"><button class="btn" onclick="exportJSON()">Export JSON</button><label class="btn secondary">Import JSON<input hidden type="file" accept=".json" onchange="importJSON(this)"></label><button class="btn danger" onclick="resetAll()">Reset Everything</button></div><p class="mini">Everything is stored locally in this browser. No account or internet is required.</p></div>`;
+}
+function editSubjects(){openModal(`<h2>Edit Subjects</h2><div id="editSubs">${S.subjects.map(subjectEditRow).join("")}</div><button class="btn secondary sm" onclick="addEditSubject()">+ Add Subject</button><div class="actions" style="margin-top:15px"><button class="btn" onclick="saveSubjectEdits()">Save Subjects</button><button class="btn secondary" onclick="closeModal()">Cancel</button></div>`)}
+function addEditSubject(){S.subjects.push({id:"s_"+uid(),name:"New Subject",code:"",type:"Theory"});closeModal();editSubjects()}
+function saveSubjectEdits(){document.querySelectorAll(".setupSubName").forEach(x=>S.subjects[+x.dataset.i].name=x.value.trim());document.querySelectorAll(".setupSubCode").forEach(x=>S.subjects[+x.dataset.i].code=x.value.trim());document.querySelectorAll(".setupSubType").forEach(x=>S.subjects[+x.dataset.i].type=x.value);if(S.subjects.some(x=>!x.name)){alert("Every subject needs a name.");return}closeModal();persist();toast("Subjects updated.")}
+function editMissed(){
+ const html=S.subjects.map(s=>`<div class="quickrow"><b>${esc(s.name)}</b><button onclick="chgMiss('${s.id}',-1)">−</button><input id="mi_${s.id}" value="${S.missed[s.id]||0}" type="number" min="0" step="1" onchange="setMiss('${s.id}',this.value)"><button onclick="chgMiss('${s.id}',1)">+</button></div>`).join("");
+ openModal(`<h2>Classes You Missed</h2><p class="muted">Enter only the number of missed classes. Attendly assumes the remaining past scheduled classes were attended.</p><div class="quick">${html}</div><div class="actions" style="margin-top:15px"><button class="btn" onclick="saveMissed()">Update Attendance</button><button class="btn secondary" onclick="closeModal()">Cancel</button></div>`);
+}
+function setMiss(id,v){S.missed[id]=Math.max(0,Math.floor(Number(v)||0))}
+function chgMiss(id,n){const el=document.getElementById("mi_"+id);el.value=Math.max(0,(Number(el.value)||0)+n);setMiss(id,el.value)}
+function saveMissed(){for(const s of S.subjects){const z=stats(s.id);const max=z.conducted;if((S.missed[s.id]||0)>max){alert(`${s.name}: maximum possible missed classes so far is ${max}.`);return}}S.overrides={};closeModal();persist();toast("Attendance updated.")}
+function setStatus(id,status){if(id.startsWith("tt_")){S.overrides[id]=status;/* Exact correction takes priority over quick count for this class. */}else{const x=S.extras.find(y=>y.id===id);if(x)x.status=status}persist();toast("Class status updated.")}
+function detail(id){const s=sub(id),z=stats(id),[lab,cl]=status(z.p),r=S.min/100;openModal(`<h2>${esc(s.name)}</h2><div class="heroMain"><div class="ring" style="--p:${Math.min(100,z.p||0)}%"><b>${z.p===null?"N/A":z.p.toFixed(2)+"%"}</b></div><div><div class="${cl}"><b>${lab}</b></div><p>Attended: <b>${z.attended}</b></p><p>Conducted: <b>${z.conducted}</b></p><p>Missed: <b>${z.missed}</b></p><p>Cancelled: <b>${z.cancelled}</b></p><p>Required: <b>${S.min}%</b></p><p><b>${z.p!==null&&z.p>=S.min?`Can miss ${canMiss(z.attended,z.conducted,r)} more`: `Need ${needAttend(z.attended,z.conducted,r)} consecutive attended`}</b></p></div></div><div class="actions"><button class="btn secondary" onclick="closeModal()">Close</button></div>`)}
+function openTimetableBuilder(editId=null){
+ const x=editId?S.timetable.find(y=>y.id===editId):{day:1,start:"09:00",end:"10:00",subjectId:S.subjects[0]?.id||"",type:"Theory",batch:"All",id:null};
+ openModal(`<h2>${editId?"Edit":"Add"} Timetable Class</h2><div class="form"><div class="field"><label>Day</label><select id="ttDay">${DAYS.slice(1).concat(["Sunday"]).map((d,i)=>{const val=i+1===7?0:i+1;return `<option value="${val}" ${+x.day===val?"selected":""}>${d}</option>`}).join("")}</select></div><div class="field"><label>Subject</label><select id="ttSub">${S.subjects.map(s=>`<option value="${s.id}" ${x.subjectId===s.id?"selected":""}>${esc(s.name)}</option>`).join("")}</select></div><div class="field"><label>Start</label><input id="ttStart" type="time" value="${x.start}"></div><div class="field"><label>End</label><input id="ttEnd" type="time" value="${x.end}"></div><div class="field"><label>Class Type</label><select id="ttType"><option ${x.type==="Theory"?"selected":""}>Theory</option><option ${x.type==="Lab"?"selected":""}>Lab</option><option ${x.type==="Practical"?"selected":""}>Practical</option><option ${x.type==="Other"?"selected":""}>Other</option></select></div><div class="field"><label>Batch</label><input id="ttBatch" value="${esc(x.batch||"All")}" placeholder="All / A / B"></div></div><div class="actions" style="margin-top:15px"><button class="btn" onclick="saveTT('${editId||""}')">Save</button><button class="btn secondary" onclick="closeModal()">Cancel</button></div>`);
+}
+function saveTT(editId){const day=+document.getElementById("ttDay").value,subjectId=document.getElementById("ttSub").value,start=document.getElementById("ttStart").value,end=document.getElementById("ttEnd").value,batch=document.getElementById("ttBatch").value.trim()||"All",type=document.getElementById("ttType").value;if(!subjectId||!start||!end||start>=end){alert("Please complete the class details.");return}if(editId){const x=S.timetable.find(y=>y.id===editId);Object.assign(x,{day,subjectId,start,end,batch,type})}else S.timetable.push({id:"tt_"+uid(),day,subjectId,start,end,batch,type});closeModal();persist();toast("Timetable saved.")}
+function editTT(id){openTimetableBuilder(id)}
+function deleteTT(id){if(confirm("Delete this timetable entry? Historical attendance corrections are kept separately where possible.")){S.timetable=S.timetable.filter(x=>x.id!==id);persist()}}
+function openTimetableImport(){
+ openModal(`<h2>Import Timetable</h2><p class="muted">For a generalized offline app, the most reliable portable format is CSV. You can also paste timetable text and use the parser.</p><div class="notice"><b>CSV columns:</b> Day, Start, End, Subject, Type, Batch<br>Example: Monday,09:00,10:00,Mathematics,Theory,All</div><p><label class="btn secondary">Choose CSV<input hidden id="csvFile" type="file" accept=".csv,.txt" onchange="readCSV(this)"></label></p><div class="field"><label>Or paste timetable rows</label><textarea id="pasteTT" rows="8" placeholder="Monday,09:00,10:00,Mathematics,Theory,All
+Tuesday,09:00,11:00,Physics Lab,Lab,A"></textarea></div><div class="actions"><button class="btn" onclick="parsePasted()">Import Pasted Rows</button><button class="btn secondary" onclick="closeModal()">Cancel</button></div><p class="mini">PDF files cannot be reliably text-extracted by a browser using only native JavaScript without embedding a PDF parser. For a truly offline single-file app, use CSV/text or enter the timetable manually.</p>`);
+}
+function readCSV(input){const f=input.files?.[0];if(!f)return;const r=new FileReader();r.onload=()=>importRows(String(r.result));r.readAsText(f)}
+function parsePasted(){importRows(document.getElementById("pasteTT").value)}
+function importRows(text){const lines=text.split(/\r?\n/).map(x=>x.trim()).filter(Boolean);let added=0,bad=0;for(const line of lines){let p=line.split(",").map(x=>x.trim());if(p.length<4){bad++;continue}if(/^day$/i.test(p[0]))continue;const day=parseDay(p[0]),start=p[1],end=p[2],name=p[3],type=p[4]||"Theory",batch=p[5]||"All";if(day===null||!/^([01]\d|2[0-3]):[0-5]\d$/.test(start)||!/^([01]\d|2[0-3]):[0-5]\d$/.test(end)||start>=end){bad++;continue}let s=S.subjects.find(x=>x.name.toLowerCase()===name.toLowerCase());if(!s){s={id:"s_"+uid(),name,code:"",type:type==="Lab"?"Lab":"Theory"};S.subjects.push(s);S.missed[s.id]=0}S.timetable.push({id:"tt_"+uid(),day,subjectId:s.id,start,end,batch,type});added++}if(!added){alert("No valid rows were imported.");return}closeModal();persist();toast(`${added} timetable entries imported${bad?`; ${bad} invalid rows skipped`:""}.`)}
+function parseDay(x){x=x.toLowerCase();const map={sun:0,sunday:0,mon:1,monday:1,tue:2,tuesday:2,wed:3,wednesday:3,thu:4,thurs:4,thursday:4,fri:5,friday:5,sat:6,saturday:6};return Object.prototype.hasOwnProperty.call(map,x)?map[x]:null}
+function openExtra(){openModal(`<h2>Add Extra Class</h2><div class="form"><div class="field"><label>Date</label><input id="eDate" type="date" max="${today()}" value="${today()}"></div><div class="field"><label>Subject</label><select id="eSub">${S.subjects.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join("")}</select></div><div class="field"><label>Start</label><input id="eStart" type="time" value="09:00"></div><div class="field"><label>End</label><input id="eEnd" type="time" value="10:00"></div><div class="field"><label>Status</label><select id="eStatus"><option value="attended">Attended</option><option value="missed">Missed</option><option value="cancelled">Cancelled</option></select></div></div><div class="actions" style="margin-top:15px"><button class="btn" onclick="saveExtra()">Save</button><button class="btn secondary" onclick="closeModal()">Cancel</button></div>`)}
+function saveExtra(){const d=document.getElementById("eDate").value,st=document.getElementById("eStart").value,en=document.getElementById("eEnd").value;if(!d||dateObj(d)>dateObj(today())||!st||!en||st>=en){alert("Enter a valid past/today date and time.");return}S.extras.push({id:"ex_"+uid(),date:d,start:st,end:en,subjectId:document.getElementById("eSub").value,type:"Extra",batch:"All",status:document.getElementById("eStatus").value});closeModal();persist();toast("Extra class added.")}
+function openHoliday(){openModal(`<h2>Add Holiday</h2><div class="form"><div class="field"><label>Date</label><input id="hDate" type="date" value="${today()}"></div><div class="field"><label>Reason</label><input id="hReason" placeholder="College holiday"></div></div><div class="actions" style="margin-top:15px"><button class="btn" onclick="saveHoliday()">Save</button><button class="btn secondary" onclick="closeModal()">Cancel</button></div>`)}
+function saveHoliday(){const d=document.getElementById("hDate").value;if(!d){alert("Choose a date.");return}if(!S.holidays.some(x=>x.date===d))S.holidays.push({date:d,reason:document.getElementById("hReason").value.trim()});closeModal();persist();toast("Holiday added.")}
+function delHoliday(d){S.holidays=S.holidays.filter(x=>x.date!==d);persist()}
+function changeStart(v){if(!v||dateObj(v)>dateObj(today())){alert("Invalid start date.");return}S.start=v;S.overrides={};persist()}
+function changeMin(v){const n=Number(v);if(n<0||n>100){alert("Attendance requirement must be 0–100%.");return}S.min=n;persist()}
+function exportJSON(){const b=new Blob([JSON.stringify(S,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="attendly-backup.json";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+function importJSON(input){const f=input.files?.[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);if(!x.subjects||!x.timetable)throw Error();S=Object.assign({},DEFAULTS,x);persist();toast("Backup imported.")}catch(e){alert("Invalid Attendly backup.")}};r.readAsText(f)}
+function resetAll(){if(confirm("Delete all Attendly data from this browser?")){localStorage.removeItem(KEY);location.reload()}}
+function openModal(x){document.getElementById("modalbox").innerHTML=x;document.getElementById("modal").classList.add("show")}
+function closeModal(){document.getElementById("modal").classList.remove("show")}
+document.getElementById("modal").onclick=e=>{if(e.target.id==="modal")closeModal()}
+function toast(x){const t=document.getElementById("toast");t.textContent=x;t.classList.add("show");clearTimeout(window.__t);window.__t=setTimeout(()=>t.classList.remove("show"),1800)}
+function saveNoRender(){localStorage.setItem(KEY,JSON.stringify(S))}
+function esc(x){return String(x??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
+render();
+</script>
+</body>
+</html>
